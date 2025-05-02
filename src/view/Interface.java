@@ -41,6 +41,7 @@ public class Interface extends JFrame {
         gbc.gridy = 0;
         panel.add(titulo, gbc);
 
+
         // Botões com as funcionalidades descritas
         JButton btnCriarModalidade = new JButton("Criar Modalidade");
         JButton btnExibirModalidade = new JButton("Exibir Modalidade por ID");
@@ -123,19 +124,15 @@ public class Interface extends JFrame {
     }
 
     private void criarPlacar() {
-        JOptionPane.showMessageDialog(this, "Funcionalidade 'Criar Placar' ainda não implementada.");
+        (new InterfacePlacar()).criarPlacar();
     }
 
     private void exibirPlacar() {
-        JOptionPane.showMessageDialog(this, "Funcionalidade 'Exibir Placar' ainda não implementada.");
+        (new InterfacePlacar()).exibirPlacarPorEquipe();
     }
 
     private void listarPlacares() {
-        //JOptionPane.showMessageDialog(this, "Funcionalidade 'Listar Placares' ainda não implementada.");
-    	ArrayList<Placar> placares = Placar.listaTodosPlacares();
-	        for (Placar placar : placares) {
-	            placar.exibirInformacoes();
-	        }
+        (new InterfacePlacar()).listarPlacares();
     }
 
     public static void main(String[] args) {
