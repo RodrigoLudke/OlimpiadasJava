@@ -1,5 +1,7 @@
 package database;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,29 +9,35 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Properties;
 
 public class MySQL {
 	private Connection conn;
 	private ArrayList<Parametro> parametros;
 
 	public MySQL() {
-		String driver = "com.mysql.cj.jdbc.Driver";
-		String host = "jdbc:mysql://localhost/olimpiadas";
-		String user = "rodrigo";
-		String password = "123456penisGG";
-
 		this.conn = null;
-		this.parametros = new ArrayList<Parametro>();
+		this.parametros = new ArrayList<>();
 
+		Properties props = new Properties();
 		try {
+			FileInputStream fis = new FileInputStream("src/database/config.properties");
+			props.load(fis);
+
+			String driver = props.getProperty("db.driver");
+			String host = props.getProperty("db.url");
+			String user = props.getProperty("db.user");
+			String password = props.getProperty("db.password");
+
 			Class.forName(driver);
 			this.conn = DriverManager.getConnection(host, user, password);
+		} catch (IOException e) {
+			System.out.println("Erro ao carregar o arquivo de configuração.");
 		} catch (ClassNotFoundException cnfe) {
-			System.out.println("Nao foi possivel encontrar o driver JDBC");
+			System.out.println("Não foi possível encontrar o driver JDBC");
 		} catch (SQLException se) {
-			System.out.println("Nao foi possivel conectar ao Banco de Dados");
+			System.out.println("Não foi possível conectar ao Banco de Dados");
 			System.out.println(se.getMessage());
-
 		}
 	}
 
